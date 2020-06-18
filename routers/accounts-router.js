@@ -63,23 +63,19 @@ router.delete("/:id", validateId(), async (req,res,next) => {
 })
 
 function validateId() {
-    return (req,res,next) => {
-        db.select("*").from("accounts").where("id", req.params.id)
-            .then(account => {
-                if (account.length < 1) { 
-                    return res.status(404).json({
-                        message: "The account does not exist"
-                    })
-                }
-                [req.account] = account
-                next()
-            })
-            .catch(err => {
-                console.log(err)
-                res.status(500).json({
-                    message: "There was an error retrieving the account"
+    return async (req,res,next) => {
+        try {
+            const account = await db.select("*").from("accounts").where("id", req.params.id)
+            if (account.length < 1) { 
+                return res.status(404).json({
+                    message: "The account does not exist"
                 })
-            })
+            }
+            [req.account] = account
+            next()
+        } catch(err) {
+            next(err)
+        }
     }
 }
 
