@@ -10,7 +10,7 @@
     "express": "^4.17.1",
     "knex": "^0.20.13",
     "pg": "^8.0.2",
-    "sqlite3": "^4.1.1"
+    "sqlite3": "^5"
   },
   "devDependencies": {
     "nodemon": "^2.0.3"
